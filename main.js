@@ -1,4 +1,4 @@
-/* 718吃瓜群众官网 · 交互脚本 */
+/* 718吃瓜群众官网 · 交互脚本 v2 */
 (function () {
   "use strict";
 
@@ -18,12 +18,20 @@
     });
   }
 
-  /* 页眉滚动阴影 */
+  /* 页眉滚动阴影 + 返回顶部按钮 */
   var header = document.getElementById("siteHeader");
-  if (header) {
-    window.addEventListener("scroll", function () {
-      header.classList.toggle("scrolled", window.scrollY > 10);
-    }, { passive: true });
+  var backTop = document.getElementById("backTop");
+  function onScroll() {
+    var y = window.scrollY;
+    if (header) header.classList.toggle("scrolled", y > 10);
+    if (backTop) backTop.classList.toggle("show", y > 500);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  if (backTop) {
+    backTop.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
   }
 
   /* FAQ 手风琴 */
@@ -49,15 +57,19 @@
   /* 作品集筛选 */
   var filterBtns = document.querySelectorAll(".filter-btn");
   var workCards = document.querySelectorAll(".work-card");
+  var emptyTip = document.getElementById("worksEmpty");
   filterBtns.forEach(function (btn) {
     btn.addEventListener("click", function () {
       filterBtns.forEach(function (b) { b.classList.remove("active"); });
       btn.classList.add("active");
       var f = btn.getAttribute("data-filter");
+      var visible = 0;
       workCards.forEach(function (card) {
         var match = f === "all" || card.getAttribute("data-cat") === f;
         card.classList.toggle("hidden", !match);
+        if (match) visible++;
       });
+      if (emptyTip) emptyTip.style.display = visible ? "none" : "block";
     });
   });
 
@@ -68,14 +80,20 @@
       e.preventDefault();
       var name = form.querySelector("#name").value.trim();
       var phone = form.querySelector("#phone").value.trim();
+      var email = form.querySelector("#email").value.trim();
       if (!name || !phone) {
         alert("请填写您的姓名和联系电话，方便我们尽快与您联系。");
+        return;
+      }
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert("邮箱格式不正确，请检查后重新填写。");
         return;
       }
       var msg = document.getElementById("formMsg");
       form.reset();
       if (msg) {
         msg.classList.add("show");
+        msg.scrollIntoView({ behavior: "smooth", block: "nearest" });
         setTimeout(function () { msg.classList.remove("show"); }, 6000);
       }
     });

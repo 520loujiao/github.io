@@ -1,6 +1,6 @@
 /* =========================================
    718吃瓜群众官网 · 718影视传媒
-   现代简洁响应式样式
+   现代简洁响应式样式 v2
    ========================================= */
 :root {
   --primary: #ff4d5a;          /* 西瓜红 */
@@ -134,7 +134,7 @@ h1, h2, h3, h4 { line-height: 1.3; font-weight: 700; color: var(--dark); }
 .card.dark-card h3 { color: #fff; }
 .card.dark-card p { color: rgba(255,255,255,.65); }
 
-/* ---------- 服务预览 / 服务网格 ---------- */
+/* ---------- 服务卡片 ---------- */
 .service-card { overflow: hidden; padding: 0; }
 .service-card .thumb { aspect-ratio: 16/10; overflow: hidden; }
 .service-card .thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
@@ -178,7 +178,7 @@ h1, h2, h3, h4 { line-height: 1.3; font-weight: 700; color: var(--dark); }
   top: -160px; right: -120px;
 }
 
-/* ---------- 页面内页 Hero ---------- */
+/* ---------- 内页 Hero ---------- */
 .page-hero {
   background: linear-gradient(180deg, rgba(20,22,29,.82), rgba(20,22,29,.9)),
     url("https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1800&q=80")
@@ -203,7 +203,7 @@ h1, h2, h3, h4 { line-height: 1.3; font-weight: 700; color: var(--dark); }
 .value-item p { font-size: 14px; color: var(--text-light); }
 
 /* ---------- 流程步骤 ---------- */
-.steps-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; counter-reset: step; }
+.steps-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
 .step { text-align: center; padding: 28px 16px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); position: relative; transition: all .3s ease; }
 .step:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
 .step .num {
@@ -255,6 +255,7 @@ h1, h2, h3, h4 { line-height: 1.3; font-weight: 700; color: var(--dark); }
 .work-card h3 { font-size: 17px; margin-bottom: 8px; }
 .work-card p { font-size: 14px; color: var(--text-light); margin-bottom: 12px; }
 .work-card .meta { font-size: 13px; color: var(--primary); font-weight: 600; }
+.works-empty { display: none; text-align: center; color: var(--text-light); padding: 40px 0; }
 
 /* ---------- 联系页 ---------- */
 .contact-wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 44px; align-items: start; }
@@ -287,6 +288,17 @@ h1, h2, h3, h4 { line-height: 1.3; font-weight: 700; color: var(--dark); }
 }
 .social-links a:hover { background: var(--primary); transform: translateY(-3px); }
 
+/* ---------- 返回顶部 ---------- */
+.back-top {
+  position: fixed; right: 22px; bottom: 22px; z-index: 90;
+  width: 46px; height: 46px; border-radius: 50%; border: none; cursor: pointer;
+  background: var(--primary); color: #fff; font-size: 18px; font-weight: 800;
+  display: grid; place-items: center; box-shadow: 0 8px 22px rgba(255,77,90,.4);
+  opacity: 0; visibility: hidden; transform: translateY(12px); transition: all .3s ease;
+}
+.back-top.show { opacity: 1; visibility: visible; transform: none; }
+.back-top:hover { background: var(--primary-dark); }
+
 /* ---------- 页脚 ---------- */
 .site-footer { background: var(--dark); color: rgba(255,255,255,.72); padding: 64px 0 0; }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 40px; padding-bottom: 44px; }
@@ -307,6 +319,10 @@ h1, h2, h3, h4 { line-height: 1.3; font-weight: 700; color: var(--dark); }
 /* ---------- 进场动画 ---------- */
 .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
 
 /* ---------- 响应式 ---------- */
 @media (max-width: 960px) {
@@ -335,4 +351,5 @@ h1, h2, h3, h4 { line-height: 1.3; font-weight: 700; color: var(--dark); }
   .footer-grid { grid-template-columns: 1fr; gap: 30px; }
   .hero { min-height: auto; }
   .contact-form { padding: 26px 20px; }
+  .back-top { right: 16px; bottom: 16px; }
 }
